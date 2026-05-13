@@ -666,3 +666,6 @@
 {"timestamp":"2026-05-08T09:52:00.504Z","level":"ERROR","message":"Error processing individual reminder","meta":{"bookingId":"69f4d3c8bb01b8a516e90eae","error":"emailService.sendEmail is not a function"}}
 {"timestamp":"2026-05-08T09:52:00.507Z","level":"ERROR","message":"Error processing individual reminder","meta":{"bookingId":"69fc145b9473a10f65f30c6c","error":"emailService.sendEmail is not a function"}}
 {"timestamp":"2026-05-08T09:52:00.510Z","level":"ERROR","message":"Error processing individual reminder","meta":{"bookingId":"69fdacf44429845beb3f0e5d","error":"emailService.sendEmail is not a function"}}
+{"timestamp":"2026-05-13T10:04:01.376Z","level":"ERROR","message":"Error processing individual reminder","meta":{"bookingId":"69f4d3c8bb01b8a516e90eae","error":"emailService.sendEmail is not a function"}}
+{"timestamp":"2026-05-13T10:04:01.381Z","level":"ERROR","message":"Error processing individual reminder","meta":{"bookingId":"69fc145b9473a10f65f30c6c","error":"emailService.sendEmail is not a function"}}
+{"timestamp":"2026-05-13T10:04:01.385Z","level":"ERROR","message":"Error processing individual reminder","meta":{"bookingId":"69fdacf44429845beb3f0e5d","error":"emailService.sendEmail is not a function"}}

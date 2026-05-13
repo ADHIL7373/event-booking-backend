@@ -8560,3 +8560,7 @@
 {"timestamp":"2026-05-08T09:52:00.496Z","level":"INFO","message":"Running reminder job..."}
 {"timestamp":"2026-05-08T09:52:00.501Z","level":"INFO","message":"Processing reminders","meta":{"count":3}}
 {"timestamp":"2026-05-08T09:52:00.511Z","level":"INFO","message":"Reminder processing completed","meta":{"totalProcessed":3}}
+{"timestamp":"2026-05-13T10:03:09.521Z","level":"INFO","message":"Event reminder job initialized - runs every minute"}
+{"timestamp":"2026-05-13T10:04:00.967Z","level":"INFO","message":"Running reminder job..."}
+{"timestamp":"2026-05-13T10:04:01.198Z","level":"INFO","message":"Processing reminders","meta":{"count":3}}
+{"timestamp":"2026-05-13T10:04:01.386Z","level":"INFO","message":"Reminder processing completed","meta":{"totalProcessed":3}}

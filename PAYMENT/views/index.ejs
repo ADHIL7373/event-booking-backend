@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Subscription Plans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        p.subtitle {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .theory {
+            max-width: 800px;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .plans {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .plan-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 40px 30px;
+            width: 280px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .plan-card h3 {
+            font-size: 1.5rem;
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+
+        .plan-card p.price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+        }
+
+        .plan-card input[type="submit"] {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .plan-card input[type="submit"]:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Badge for best value */
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff7b00;
+            color: #fff;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 700px) {
+            .plans {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose Your AI Plan</h1>
+    <p class="subtitle">Flexible pricing plans to fit your needs.</p>
+
+    <!-- Theory / Description Section -->
+    <div class="theory">
+        <h2>About Our AI Service</h2>
+        <p>
+            Our AI platform leverages state-of-the-art machine learning algorithms to help you automate tasks, analyze data, and generate intelligent insights with ease. 
+            Whether you are a business professional, developer, or student, our AI tools can save you time, enhance productivity, and empower you to make data-driven decisions.
+        </p>
+        <p>
+            By subscribing to our plans, you gain access to advanced AI features, including real-time analytics, content generation, predictive modeling, and personalized recommendations. 
+            Our platform is continuously updated to ensure cutting-edge performance and reliability.
+        </p>
+        <p>
+            Choose a plan that fits your needs: monthly for flexibility, or yearly for the best value and long-term access to all premium features.
+        </p>
+    </div>
+
+    <div class="plans">
+        <!-- Monthly Plan -->
+        <div class="plan-card">
+            <h3>Monthly Plan</h3>
+            <p class="price">$49<span style="font-size: 1rem;">/month</span></p>
+            <form action="/checkout" method="post">
+                <input type="hidden" name="plan" value="monthly">
+                <input type="submit" value="Subscribe Monthly">
+            </form>
+        </div>
+
+        <!-- Yearly Plan -->
+        <div class="plan-card">
+            <div class="badge">Best Value</div>
+            <h3>Yearly Plan</h3>
+            <p class="price">$499<span style="font-size: 1rem;">/year</span></p>
+            <form action="/checkout" method="post">
+                <input type="hidden" name="plan" value="yearly">
+                <input type="submit" value="Subscribe Yearly">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

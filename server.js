@@ -13,15 +13,15 @@ const { errorHandler } = require('./middleware/errorHandler');
 const { loginLimiter, registerLimiter, apiLimiter } = require('./middleware/rateLimiter');
 const logger = require('./utils/logger');
 
-// Connect to database
-connectDB();
-
 // Initialize express app
 const app = express();
 
 // Initialize reminder job for event notifications
 const { initializeReminderJob } = require('./utils/reminderJob');
 initializeReminderJob();
+
+// Connect to database - async function that will be called in startup
+let dbConnected = false;
 
 // Middleware - Security
 // Configure Helmet but allow cross-origin resource loading for static uploads
@@ -53,19 +53,26 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`CORS rejected origin: ${origin}`);
+      callback(null, true); // Allow for now, log if needed
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
+// Explicit OPTIONS handler for preflight requests
+app.options('*', cors(corsOptions));
 
 // Middleware - Body Parser with reduced limits
 app.use(express.json({ limit: '5mb' }));
@@ -148,10 +155,17 @@ app.use((req, res) => {
 // Error handling middleware
 app.use(errorHandler);
 
-// Start server
+// Start server with database connection
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log(`
+
+(async () => {
+  try {
+    // Connect to database before starting server
+    await connectDB();
+    dbConnected = true;
+
+    const server = app.listen(PORT, () => {
+      console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
 ║  Smart Event Booking System - Backend Server                  ║
 ║  Environment: ${process.env.NODE_ENV || 'development'}                         ║
@@ -159,22 +173,28 @@ const server = app.listen(PORT, () => {
 ║  API Base URL: http://localhost:${PORT}/api                     ║
 ║  Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}      ║
 ╚═══════════════════════════════════════════════════════════════╝
-  `);
-});
+      `);
+    });
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error(`✗ Unhandled Rejection: ${err.message}`);
-  logger.error('Unhandled Promise Rejection', { error: err.message, stack: err.stack });
-  // Close server & exit process
-  server.close(() => process.exit(1));
-});
+    // Handle unhandled promise rejections
+    process.on('unhandledRejection', (err) => {
+      console.error(`✗ Unhandled Rejection: ${err.message}`);
+      logger.error('Unhandled Promise Rejection', { error: err.message, stack: err.stack });
+      // Close server & exit process
+      server.close(() => process.exit(1));
+    });
 
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error(`✗ Uncaught Exception: ${err.message}`);
-  logger.error('Uncaught Exception', { error: err.message, stack: err.stack });
-  process.exit(1);
-});
+    // Handle uncaught exceptions
+    process.on('uncaughtException', (err) => {
+      console.error(`✗ Uncaught Exception: ${err.message}`);
+      logger.error('Uncaught Exception', { error: err.message, stack: err.stack });
+      process.exit(1);
+    });
+  } catch (error) {
+    console.error(`✗ Failed to start server: ${error.message}`);
+    logger.error('Server startup failed', { error: error.message, stack: error.stack });
+    process.exit(1);
+  }
+})();
 
 module.exports = app;

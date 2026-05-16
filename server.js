@@ -60,7 +60,7 @@ const corsOptions = {
       callback(null, true);
     } else {
       console.warn(`CORS rejected origin: ${origin}`);
-      callback(null, true); // Allow for now, log if needed
+      callback(new Error(`CORS policy: origin ${origin} not allowed`));
     }
   },
   credentials: true,

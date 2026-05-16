@@ -9,7 +9,8 @@
  * @returns {boolean} True if valid
  */
 exports.isValidEmail = (email) => {
-  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  // Simple email regex that works for most cases
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 

@@ -22,9 +22,9 @@ module.exports = {
 
   // Rate Limiting
   RATE_LIMIT: {
-    LOGIN_MAX_ATTEMPTS: 5,
+    LOGIN_MAX_ATTEMPTS: 50,
     LOGIN_WINDOW_MS: 15 * 60 * 1000, // 15 minutes
-    REGISTER_MAX_ATTEMPTS: 3,
+    REGISTER_MAX_ATTEMPTS: 20,
     REGISTER_WINDOW_MS: 60 * 60 * 1000, // 1 hour
     API_WINDOW_MS: 15 * 60 * 1000, // 15 minutes
     API_MAX_REQUESTS: 100,
